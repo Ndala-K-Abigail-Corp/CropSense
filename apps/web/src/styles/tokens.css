@@ -1,0 +1,127 @@
+/**
+ * Design Tokens - CSS Custom Properties
+ * Source: docs/design-tokens.json
+ * Prefix: --ag- (Agriculture)
+ */
+
+:root {
+  /* Colors - Primary */
+  --ag-color-primary-100: #eaf7ee;
+  --ag-color-primary-200: #c6edcf;
+  --ag-color-primary-300: #a0e2ae;
+  --ag-color-primary-400: #7bda8d;
+  --ag-color-primary-500: #56d26c;
+  --ag-color-primary-600: #4ab35c;
+  --ag-color-primary-700: #3a8d45;
+  --ag-color-primary-800: #2c6830;
+  --ag-color-primary-900: #1e421c;
+
+  /* Colors - Secondary */
+  --ag-color-secondary-100: #eff8fc;
+  --ag-color-secondary-200: #d8f1fa;
+  --ag-color-secondary-300: #b7e8f6;
+  --ag-color-secondary-400: #98dff2;
+  --ag-color-secondary-500: #78d6ee;
+  --ag-color-secondary-600: #5eb0c8;
+  --ag-color-secondary-700: #478695;
+  --ag-color-secondary-800: #315a62;
+  --ag-color-secondary-900: #1d3335;
+
+  /* Colors - Neutral */
+  --ag-color-neutral-white: #ffffff;
+  --ag-color-neutral-black: #000000;
+  --ag-color-neutral-100: #f9f9f9;
+  --ag-color-neutral-200: #efefef;
+  --ag-color-neutral-300: #e0e0e0;
+  --ag-color-neutral-400: #c8c8c8;
+  --ag-color-neutral-500: #a0a0a0;
+  --ag-color-neutral-600: #7a7a7a;
+  --ag-color-neutral-700: #4e4e4e;
+  --ag-color-neutral-800: #2c2c2c;
+  --ag-color-neutral-900: #1a1a1a;
+
+  /* Colors - Feedback */
+  --ag-color-feedback-success: #28a745;
+  --ag-color-feedback-info: #17a2b8;
+  --ag-color-feedback-warning: #ffc107;
+  --ag-color-feedback-error: #dc3545;
+
+  /* Typography - Fonts */
+  --ag-font-base: 'Inter', sans-serif;
+  --ag-font-heading: 'Playfair Display', serif;
+
+  /* Typography - Weights */
+  --ag-font-weight-regular: 400;
+  --ag-font-weight-medium: 500;
+  --ag-font-weight-bold: 700;
+
+  /* Typography - Sizes */
+  --ag-font-size-xs: 0.75rem;
+  --ag-font-size-sm: 0.875rem;
+  --ag-font-size-md: 1rem;
+  --ag-font-size-lg: 1.125rem;
+  --ag-font-size-xl: 1.5rem;
+  --ag-font-size-2xl: 2rem;
+  --ag-font-size-3xl: 2.5rem;
+  --ag-font-size-4xl: 3rem;
+
+  /* Spacing */
+  --ag-spacing-0: 0px;
+  --ag-spacing-1: 4px;
+  --ag-spacing-2: 8px;
+  --ag-spacing-3: 12px;
+  --ag-spacing-4: 16px;
+  --ag-spacing-5: 20px;
+  --ag-spacing-6: 24px;
+  --ag-spacing-8: 32px;
+  --ag-spacing-10: 40px;
+  --ag-spacing-12: 48px;
+  --ag-spacing-16: 64px;
+  --ag-spacing-20: 80px;
+  --ag-spacing-24: 96px;
+  --ag-spacing-32: 128px;
+
+  /* Border Radius */
+  --ag-radius-none: 0px;
+  --ag-radius-sm: 4px;
+  --ag-radius-md: 8px;
+  --ag-radius-lg: 16px;
+  --ag-radius-rounded: 50%;
+  --ag-radius-pill: 9999px;
+
+  /* Shadows */
+  --ag-shadow-sm: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  --ag-shadow-md: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  --ag-shadow-lg: 0px 10px 15px rgba(0, 0, 0, 0.15);
+
+  /* Animations - Duration */
+  --ag-duration-fast: 150ms;
+  --ag-duration-normal: 300ms;
+  --ag-duration-slow: 500ms;
+
+  /* Component-specific */
+  --ag-nav-height: 64px;
+
+  /* shadcn/ui compatibility */
+  --background: 0 0% 100%;
+  --foreground: 0 0% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 10%;
+  --primary: 140 64% 58%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 191 71% 71%;
+  --secondary-foreground: 0 0% 10%;
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 45%;
+  --accent: 0 0% 96%;
+  --accent-foreground: 0 0% 10%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 88%;
+  --input: 0 0% 88%;
+  --ring: 140 64% 58%;
+  --radius: 0.5rem;
+}
+
