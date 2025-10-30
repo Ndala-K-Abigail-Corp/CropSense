@@ -1,0 +1,209 @@
+{
+    "theme": {
+      "colors": {
+        "primary": {
+          "100": "#EAF7EE",
+          "200": "#C6EDCF",
+          "300": "#A0E2AE",
+          "400": "#7BDA8D",
+          "500": "#56D26C",
+          "600": "#4AB35C",
+          "700": "#3A8D45",
+          "800": "#2C6830",
+          "900": "#1E421C"
+        },
+        "secondary": {
+          "100": "#EFF8FC",
+          "200": "#D8F1FA",
+          "300": "#B7E8F6",
+          "400": "#98DFF2",
+          "500": "#78D6EE",
+          "600": "#5EB0C8",
+          "700": "#478695",
+          "800": "#315A62",
+          "900": "#1D3335"
+        },
+        "neutral": {
+          "white": "#FFFFFF",
+          "black": "#000000",
+          "100": "#F9F9F9",
+          "200": "#EFEFEF",
+          "300": "#E0E0E0",
+          "400": "#C8C8C8",
+          "500": "#A0A0A0",
+          "600": "#7A7A7A",
+          "700": "#4E4E4E",
+          "800": "#2C2C2C",
+          "900": "#1A1A1A"
+        },
+        "feedback": {
+          "success": "#28A745",
+          "info": "#17A2B8",
+          "warning": "#FFC107",
+          "error": "#DC3545"
+        }
+      },
+      "typography": {
+        "fonts": {
+          "base": "'Inter', sans‑serif",
+          "heading": "'Playfair Display', serif"
+        },
+        "weights": {
+          "regular": 400,
+          "medium": 500,
+          "bold": 700
+        },
+        "sizes": {
+          "xs": "0.75rem",
+          "sm": "0.875rem",
+          "md": "1rem",
+          "lg": "1.125rem",
+          "xl": "1.5rem",
+          "2xl": "2rem",
+          "3xl": "2.5rem",
+          "4xl": "3rem"
+        },
+        "lineHeights": {
+          "xs": 1.2,
+          "sm": 1.3,
+          "md": 1.5,
+          "lg": 1.4,
+          "xl": 1.33,
+          "2xl": 1.25,
+          "3xl": 1.2,
+          "4xl": 1.2
+        }
+      },
+      "spacing": {
+        "0": "0px",
+        "1": "4px",
+        "2": "8px",
+        "3": "12px",
+        "4": "16px",
+        "5": "20px",
+        "6": "24px",
+        "8": "32px",
+        "10": "40px",
+        "12": "48px",
+        "16": "64px",
+        "20": "80px",
+        "24": "96px",
+        "32": "128px"
+      },
+      "radii": {
+        "none": "0px",
+        "sm": "4px",
+        "md": "8px",
+        "lg": "16px",
+        "rounded": "50%",
+        "pill": "9999px"
+      },
+      "shadows": {
+        "sm": "0px 1px 2px rgba(0,0,0,0.05)",
+        "md": "0px 4px 6px rgba(0,0,0,0.1)",
+        "lg": "0px 10px 15px rgba(0,0,0,0.15)"
+      },
+      "animations": {
+        "duration": {
+          "fast": "150ms",
+          "normal": "300ms",
+          "slow": "500ms"
+        },
+        "easing": {
+          "easeIn": "cubic‑bezier(0.4, 0.0, 1, 1)",
+          "easeOut": "cubic‑bezier(0.0, 0.0, 0.2, 1)",
+          "easeInOut": "cubic‑bezier(0.4, 0.0, 0.2, 1)"
+        },
+        "keyframes": {
+          "fadeIn": {
+            "from": { "opacity": 0 },
+            "to": { "opacity": 1 }
+          },
+          "slideUp": {
+            "from": { "transform": "translateY(20px)", "opacity": 0 },
+            "to": { "transform": "translateY(0)", "opacity": 1 }
+          }
+        }
+      },
+      "breakpoints": {
+        "mobile": "0px",
+        "tablet": "768px",
+        "desktop": "1280px"
+      },
+      "grid": {
+        "container": {
+          "mobile": "100%",
+          "tablet": "720px",
+          "desktop": "1140px"
+        },
+        "columns": 12,
+        "gutter": {
+          "mobile": "16px",
+          "tablet": "24px",
+          "desktop": "32px"
+        }
+      },
+      "components": {
+        "button": {
+          "default": {
+            "fontSize": "1rem",
+            "padding": "0.75rem 1.5rem",
+            "borderRadius": "8px",
+            "backgroundColor": "{colors.primary.500}",
+            "color": "{colors.neutral.white}"
+          },
+          "hover": {
+            "backgroundColor": "{colors.primary.600}"
+          },
+          "disabled": {
+            "backgroundColor": "{colors.neutral.300}",
+            "color": "{colors.neutral.500}"
+          }
+        },
+        "input": {
+          "fontSize": "1rem",
+          "padding": "0.75rem 1rem",
+          "borderRadius": "8px",
+          "borderColor": "{colors.neutral.300}",
+          "focus": {
+            "borderColor": "{colors.primary.500}",
+            "boxShadow": "0 0 0 3px rgba(86,210,108,0.2)"
+          }
+        },
+        "card": {
+          "padding": "24px",
+          "borderRadius": "16px",
+          "backgroundColor": "{colors.neutral.white}",
+          "shadow": "{shadows.md}"
+        },
+        "hero": {
+          "paddingTop": "80px",
+          "paddingBottom": "80px",
+          "textAlign": "center"
+        },
+        "nav": {
+          "height": "64px",
+          "backgroundColor": "{colors.neutral.white}",
+          "shadow": "{shadows.sm}"
+        }
+      },
+      "accessibility": {
+        "contrastRatios": {
+          "AA": "≥ 4.5:1",
+          "AAA": "≥ 7:1"
+        },
+        "notes": [
+          "Ensure text on primary color background meets 4.5:1 ratio at minimum.",
+          "Interactive elements must have visible focus states (outline or box‑shadow)."
+        ]
+      },
+      "exportNotes": {
+        "cssVariablePrefix": "--ag‑",
+        "sampleHtmlCss": {
+          "css": ":root { --ag‑color‑primary‑500: #56D26C; --ag‑font‑base: 'Inter', sans‑serif; }",
+          "html": "<button class=\"btn btn‑primary\">Start Now</button>"
+        }
+      }
+    }
+  }
+  
