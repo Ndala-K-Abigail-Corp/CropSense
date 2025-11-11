@@ -14,7 +14,7 @@ from config import settings
 app = FastAPI(
     title="CropSense RAG API",
     description="RAG backend for CropSense agricultural guidance platform",
-    version="1.0.0"
+    version="1.0.0",
 )
 
 # CORS middleware
@@ -60,11 +60,7 @@ class EmbedResponse(BaseModel):
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
-    return {
-        "status": "healthy",
-        "service": "cropsense-rag",
-        "version": "1.0.0"
-    }
+    return {"status": "healthy", "service": "cropsense-rag", "version": "1.0.0"}
 
 
 # Query endpoint
@@ -72,7 +68,7 @@ async def health_check():
 async def query(request: QueryRequest):
     """
     Process a query and return RAG response
-    
+
     This is a stub implementation for development.
     In production, this should:
     1. Retrieve relevant chunks
@@ -83,37 +79,37 @@ async def query(request: QueryRequest):
     try:
         # Retrieve relevant chunks
         results = await retriever_service.retrieve(
-            query=request.query,
-            top_k=request.top_k,
-            filters=request.filters
+            query=request.query, top_k=request.top_k, filters=request.filters
         )
-        
+
         # Build context
         context = retriever_service.build_context(results)
-        
+
         # Generate answer (stub for development)
         # In production, call Vertex AI Gemini here
         answer = generate_mock_answer(request.query, context)
-        
+
         # Format sources
         sources = []
         for result in results[:3]:  # Top 3 sources
             metadata = result.get("metadata", {})
-            sources.append(Source(
-                documentId=metadata.get("documentId", "unknown"),
-                title=metadata.get("source", "Unknown Document"),
-                pageNumber=metadata.get("pageNumber"),
-                excerpt=result.get("content", "")[:200] + "..."
-            ))
-        
+            sources.append(
+                Source(
+                    documentId=metadata.get("documentId", "unknown"),
+                    title=metadata.get("source", "Unknown Document"),
+                    pageNumber=metadata.get("pageNumber"),
+                    excerpt=result.get("content", "")[:200] + "...",
+                )
+            )
+
         return QueryResponse(
-            answer=answer,
-            sources=sources,
-            retrievedChunks=len(results)
+            answer=answer, sources=sources, retrievedChunks=len(results)
         )
-    
+
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Query processing failed: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Query processing failed: {str(e)}"
+        )
 
 
 # Embedding endpoint
@@ -123,14 +119,13 @@ async def embed(request: EmbedRequest):
     try:
         embedding = await embedding_service.embed_text(request.text)
         dimension = embedding_service.get_embedding_dimension()
-        
-        return EmbedResponse(
-            embedding=embedding,
-            dimension=dimension
-        )
-    
+
+        return EmbedResponse(embedding=embedding, dimension=dimension)
+
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Embedding generation failed: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Embedding generation failed: {str(e)}"
+        )
 
 
 def generate_mock_answer(query: str, context: str) -> str:
@@ -155,10 +150,10 @@ Note: This is advisory information only. Please consult with local agricultural 
 # Run the app
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(
         "main:app",
         host=settings.api_host,
         port=settings.api_port,
-        reload=settings.api_reload
+        reload=settings.api_reload,
     )
-
