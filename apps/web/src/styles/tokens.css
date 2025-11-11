@@ -1,0 +1,119 @@
+/**
+ * CropSense Design Tokens
+ * Generated from design-tokens.json
+ * Version: 1.0.0
+ */
+
+:root {
+  /* Colors - Primary */
+  --cs-color-primary-50: #f2fbf4;
+  --cs-color-primary-100: #dff6e6;
+  --cs-color-primary-200: #c6efcf;
+  --cs-color-primary-300: #9fe0a8;
+  --cs-color-primary-400: #7ccd86;
+  --cs-color-primary-500: #4caf50; /* brand green */
+  --cs-color-primary-600: #3e9943;
+  --cs-color-primary-700: #2f6f30;
+
+  /* Colors - Secondary */
+  --cs-color-secondary-100: #fff8e6;
+  --cs-color-secondary-300: #fee29b;
+  --cs-color-secondary-500: #f6c84c; /* accent warm yellow */
+
+  /* Colors - Neutral */
+  --cs-color-neutral-50: #fbfcfb;
+  --cs-color-neutral-100: #f6f7f6;
+  --cs-color-neutral-200: #eceeeb;
+  --cs-color-neutral-300: #d8dcd6;
+  --cs-color-neutral-400: #bfc6bd;
+  --cs-color-neutral-500: #94a09a;
+  --cs-color-neutral-700: #46554f;
+
+  /* Colors - Text */
+  --cs-color-text-primary: #1f2a27;
+  --cs-color-text-secondary: #4e5a56;
+
+  /* Colors - Surface & Status */
+  --cs-color-surface: #ffffff;
+  --cs-color-muted: #f0f6f2;
+  --cs-color-success: #43a047;
+  --cs-color-warning: #ffb300;
+  --cs-color-error: #e53935;
+
+  /* Typography */
+  --cs-font-family-base: 'Inter', 'Poppins', sans-serif;
+
+  --cs-font-size-display: 56px;
+  --cs-font-weight-display: 700;
+  --cs-line-height-display: 1.08;
+
+  --cs-font-size-h1: 40px;
+  --cs-font-weight-h1: 700;
+  --cs-line-height-h1: 1.12;
+
+  --cs-font-size-h2: 28px;
+  --cs-font-weight-h2: 600;
+  --cs-line-height-h2: 1.2;
+
+  --cs-font-size-h3: 20px;
+  --cs-font-weight-h3: 600;
+  --cs-line-height-h3: 1.25;
+
+  --cs-font-size-body: 16px;
+  --cs-font-weight-body: 400;
+  --cs-line-height-body: 1.6;
+
+  --cs-font-size-small: 14px;
+  --cs-font-weight-small: 400;
+
+  --cs-font-size-caption: 12px;
+  --cs-font-weight-caption: 400;
+
+  /* Spacing */
+  --cs-spacing-xxs: 4px;
+  --cs-spacing-xs: 8px;
+  --cs-spacing-sm: 12px;
+  --cs-spacing-md: 16px;
+  --cs-spacing-lg: 24px;
+  --cs-spacing-xl: 32px;
+  --cs-spacing-2xl: 48px;
+  --cs-spacing-3xl: 64px;
+
+  /* Border Radius */
+  --cs-radius-sm: 6px;
+  --cs-radius-md: 10px;
+  --cs-radius-lg: 16px;
+  --cs-radius-pill: 9999px;
+
+  /* Shadows */
+  --cs-shadow-sm: 0 1px 2px rgba(15, 23, 20, 0.04);
+  --cs-shadow-md: 0 6px 18px rgba(15, 23, 20, 0.08);
+  --cs-shadow-lg: 0 12px 30px rgba(15, 23, 20, 0.12);
+
+  /* Motion */
+  --cs-motion-duration-fast: 120ms;
+  --cs-motion-duration-medium: 260ms;
+  --cs-motion-duration-slow: 420ms;
+  --cs-motion-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Components */
+  --cs-button-font-size: 16px;
+  --cs-button-padding: 12px 20px;
+  --cs-button-radius: 10px;
+
+  --cs-input-padding: 10px 12px;
+  --cs-input-radius: 6px;
+  --cs-input-border: 1px solid #d8dcd6;
+  --cs-input-focus-ring: 0 0 0 4px rgba(76, 175, 80, 0.12);
+
+  --cs-card-padding: 24px;
+  --cs-card-radius: 16px;
+  --cs-card-shadow: 0 6px 18px rgba(15, 23, 20, 0.08);
+
+  --cs-nav-height: 64px;
+
+  /* Accessibility */
+  --cs-focus-outline: 2px solid rgba(76, 175, 80, 0.85);
+  --cs-touch-target-size: 44px;
+}
+
