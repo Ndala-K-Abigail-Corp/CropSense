@@ -9,7 +9,7 @@ import {
   type UserCredential,
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
-import { auth, db, googleProvider } from '@/lib/firebase';
+import { auth, db, googleProvider } from '../lib/firebase.ts';
 
 interface AuthContextType {
   user: User | null;
@@ -30,7 +30,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         // Ensure user profile exists in Firestore
-        await ensureUserProfile(user);
+        try {
+          await ensureUserProfile(user);
+        } catch (error) {
+          console.error('Error creating user profile:', error);
+          // Continue with authentication even if profile creation fails
+        }
       }
       setUser(user);
       setLoading(false);

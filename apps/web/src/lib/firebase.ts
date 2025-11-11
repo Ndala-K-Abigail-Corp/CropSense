@@ -2,7 +2,7 @@ import { initializeApp, type FirebaseApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, type Auth } from 'firebase/auth';
 import { getFirestore, type Firestore } from 'firebase/firestore';
 import { getStorage, type FirebaseStorage } from 'firebase/storage';
-import { env } from '@/env';
+import { env } from '../env.ts';
 
 const firebaseConfig = {
   apiKey: env.VITE_FIREBASE_API_KEY,
