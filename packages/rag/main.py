@@ -1,19 +1,20 @@
 """
-Main FastAPI application for RAG backend
+Main FastAPI application for CropSense RAG backend (Retrieval-Only)
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 from retriever import retriever_service
 from embeddings import embedding_service
+from vector_store import vector_store
 from config import settings
 
 # Initialize FastAPI app
 app = FastAPI(
     title="CropSense RAG API",
-    description="RAG backend for CropSense agricultural guidance platform",
+    description="Retrieval-only RAG backend for CropSense agricultural guidance platform",
     version="1.0.0",
 )
 
@@ -32,28 +33,44 @@ class QueryRequest(BaseModel):
     query: str
     top_k: Optional[int] = None
     filters: Optional[Dict[str, Any]] = None
+    min_score: Optional[float] = None
 
 
-class Source(BaseModel):
-    documentId: str
-    title: str
-    pageNumber: Optional[int] = None
-    excerpt: str
+class RetrievedChunk(BaseModel):
+    chunkId: str
+    content: str
+    score: float
+    metadata: Dict[str, Any]
 
 
 class QueryResponse(BaseModel):
-    answer: str
-    sources: List[Source]
-    retrievedChunks: int
+    query: str
+    chunks: List[RetrievedChunk]
+    totalRetrieved: int
+    context: str
 
 
 class EmbedRequest(BaseModel):
     text: str
+    task_type: Optional[str] = "RETRIEVAL_DOCUMENT"
 
 
 class EmbedResponse(BaseModel):
     embedding: List[float]
     dimension: int
+
+
+class DocumentInfo(BaseModel):
+    documentId: str
+    source: str
+    documentType: str
+    chunkCount: int
+    createdAt: Optional[Any] = None
+
+
+class DocumentListResponse(BaseModel):
+    documents: List[DocumentInfo]
+    totalDocuments: int
 
 
 # Health check endpoint
@@ -63,47 +80,55 @@ async def health_check():
     return {"status": "healthy", "service": "cropsense-rag", "version": "1.0.0"}
 
 
-# Query endpoint
+# Query endpoint (Retrieval-only)
 @app.post("/query", response_model=QueryResponse)
 async def query(request: QueryRequest):
     """
-    Process a query and return RAG response
+    Retrieve relevant chunks for a query (retrieval-only, no generation)
 
-    This is a stub implementation for development.
-    In production, this should:
-    1. Retrieve relevant chunks
-    2. Build context
-    3. Call Vertex AI Gemini for generation
-    4. Return answer with citations
+    Args:
+        request: Query request with query text, optional top_k, filters, and min_score
+
+    Returns:
+        Retrieved chunks with similarity scores and formatted context
+
+    Example request:
+        {
+            "query": "How to prevent tomato blight?",
+            "top_k": 5,
+            "filters": {"crop": "tomato"},
+            "min_score": 0.6
+        }
     """
     try:
         # Retrieve relevant chunks
         results = await retriever_service.retrieve(
-            query=request.query, top_k=request.top_k, filters=request.filters
+            query=request.query,
+            top_k=request.top_k,
+            filters=request.filters,
+            min_score=request.min_score
         )
 
-        # Build context
+        # Build formatted context
         context = retriever_service.build_context(results)
 
-        # Generate answer (stub for development)
-        # In production, call Vertex AI Gemini here
-        answer = generate_mock_answer(request.query, context)
-
-        # Format sources
-        sources = []
-        for result in results[:3]:  # Top 3 sources
-            metadata = result.get("metadata", {})
-            sources.append(
-                Source(
-                    documentId=metadata.get("documentId", "unknown"),
-                    title=metadata.get("source", "Unknown Document"),
-                    pageNumber=metadata.get("pageNumber"),
-                    excerpt=result.get("content", "")[:200] + "...",
+        # Format chunks for response
+        chunks = []
+        for result in results:
+            chunks.append(
+                RetrievedChunk(
+                    chunkId=result.get("chunkId", "unknown"),
+                    content=result.get("content", ""),
+                    score=result.get("score", 0.0),
+                    metadata=result.get("metadata", {})
                 )
             )
 
         return QueryResponse(
-            answer=answer, sources=sources, retrievedChunks=len(results)
+            query=request.query,
+            chunks=chunks,
+            totalRetrieved=len(results),
+            context=context
         )
 
     except Exception as e:
@@ -115,9 +140,20 @@ async def query(request: QueryRequest):
 # Embedding endpoint
 @app.post("/embed", response_model=EmbedResponse)
 async def embed(request: EmbedRequest):
-    """Generate embedding for text"""
+    """
+    Generate embedding for text
+    
+    Args:
+        request: Text to embed and task type
+        
+    Returns:
+        Embedding vector and dimension
+    """
     try:
-        embedding = await embedding_service.embed_text(request.text)
+        embedding = await embedding_service.embed_text(
+            request.text,
+            task_type=request.task_type
+        )
         dimension = embedding_service.get_embedding_dimension()
 
         return EmbedResponse(embedding=embedding, dimension=dimension)
@@ -128,23 +164,64 @@ async def embed(request: EmbedRequest):
         )
 
 
-def generate_mock_answer(query: str, context: str) -> str:
+# Documents list endpoint
+@app.get("/documents", response_model=DocumentListResponse)
+async def list_documents():
     """
-    Generate a mock answer for development
-    In production, replace with Vertex AI Gemini call
+    List all ingested documents in the vector store
+    
+    Returns:
+        List of documents with metadata and chunk counts
     """
-    return f"""Based on the available agricultural resources, here's guidance for your question about "{query}":
+    try:
+        documents = await vector_store.list_documents()
+        
+        return DocumentListResponse(
+            documents=[
+                DocumentInfo(**doc) for doc in documents
+            ],
+            totalDocuments=len(documents)
+        )
+    
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Failed to list documents: {str(e)}"
+        )
 
-This is a mock response for development purposes. In production, this will be replaced with actual generative AI responses from Vertex AI Gemini, using the retrieved context from trusted agricultural documents.
 
-The system has retrieved relevant information from the knowledge base and would synthesize a comprehensive answer citing specific sources and page numbers.
-
-Key points to consider:
-1. Follow local agricultural best practices
-2. Consider your specific soil and climate conditions
-3. Consult with agricultural extension services for region-specific guidance
-
-Note: This is advisory information only. Please consult with local agricultural experts for specific recommendations."""
+# Document statistics endpoint
+@app.get("/documents/{document_id}/stats")
+async def get_document_stats(document_id: str):
+    """
+    Get statistics for a specific document
+    
+    Args:
+        document_id: Document identifier
+        
+    Returns:
+        Document statistics
+    """
+    try:
+        chunk_count = await vector_store.count_chunks(document_id=document_id)
+        
+        if chunk_count == 0:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Document '{document_id}' not found"
+            )
+        
+        return {
+            "documentId": document_id,
+            "chunkCount": chunk_count
+        }
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to get document stats: {str(e)}"
+        )
 
 
 # Run the app

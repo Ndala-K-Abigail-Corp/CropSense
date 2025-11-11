@@ -17,10 +17,14 @@ class Settings(BaseSettings):
     # Vertex AI
     vertex_ai_location: str = os.getenv("VERTEX_AI_LOCATION", "us-central1")
     embedding_model: str = os.getenv("EMBEDDING_MODEL", "text-embedding-005")
+    embedding_dimension: int = int(os.getenv("EMBEDDING_DIMENSION", "768"))
     generation_model: str = os.getenv("GENERATION_MODEL", "gemini-2.5-pro")
 
     # Firestore
     firestore_database: str = os.getenv("FIRESTORE_DATABASE", "(default)")
+    # Firestore Collection for Vector Storage
+    vector_collection: str = os.getenv("VECTOR_COLLECTION", "vectorChunks")
+
 
     # RAG Configuration
     chunk_size: int = int(os.getenv("CHUNK_SIZE", "512"))
