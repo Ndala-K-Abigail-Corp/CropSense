@@ -19,6 +19,7 @@ function validateEnv() {
       error.errors.forEach((err) => {
         console.error(`  - ${err.path.join('.')}: ${err.message}`);
       });
+      console.error('\n💡 Make sure you have a .env file in apps/web/ with your Firebase credentials');
       throw new Error('Environment validation failed');
     }
     throw error;
@@ -26,4 +27,3 @@ function validateEnv() {
 }
 
 export const env = validateEnv();
-

@@ -6,12 +6,19 @@ import { Input } from '@/components/ui/Input';
 import { Card } from '@/components/ui/Card';
 import { api, type ChatMessage, type Source } from '@/lib/api';
 import { formatRelativeTime } from '@/lib/utils';
+import { useMessages } from '@/hooks/useMessages';
+import { useConversations } from '@/hooks/useConversations';
 
-export function ChatInterface() {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+interface ChatInterfaceProps {
+  conversationId: string | null;
+  onConversationCreated?: (id: string) => void;
+}
+
+export function ChatInterface({ conversationId, onConversationCreated }: ChatInterfaceProps) {
+  const { messages, loading: messagesLoading, addMessage } = useMessages(conversationId);
+  const { createConversation } = useConversations();
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [conversationId, setConversationId] = useState<string | undefined>();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -26,42 +33,59 @@ export function ChatInterface() {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
-    const userMessage: ChatMessage = {
-      role: 'user',
-      content: input.trim(),
-      createdAt: new Date(),
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
+    const userMessageContent = input.trim();
     setInput('');
     setIsLoading(true);
 
     try {
+      let currentConversationId = conversationId;
+
+      // Create new conversation if needed
+      if (!currentConversationId) {
+        currentConversationId = await createConversation();
+        onConversationCreated?.(currentConversationId);
+      }
+
+      // Add user message to Firestore
+      await addMessage(currentConversationId, 'user', userMessageContent);
+
+      // Get AI response from backend (mock for now)
       const response = await api.chat.sendMessage({
-        query: userMessage.content,
-        conversationId,
+        query: userMessageContent,
+        conversationId: currentConversationId,
       });
 
-      setConversationId(response.conversationId);
-      setMessages((prev) => [...prev, response.message]);
+      // Add assistant message to Firestore
+      await addMessage(
+        currentConversationId,
+        'assistant',
+        response.message.content,
+        response.message.sources
+      );
     } catch (error) {
       console.error('Failed to send message:', error);
-      const errorMessage: ChatMessage = {
-        role: 'assistant',
-        content: 'Sorry, I encountered an error. Please try again.',
-        createdAt: new Date(),
-      };
-      setMessages((prev) => [...prev, errorMessage]);
+      // Add error message to current conversation if it exists
+      if (conversationId) {
+        await addMessage(
+          conversationId,
+          'assistant',
+          'Sorry, I encountered an error. Please try again.'
+        );
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col h-full max-h-[800px] bg-surface rounded-lg shadow-lg border border-neutral-200">
+    <div className="flex flex-col h-full max-h-[800px] bg-white rounded-lg shadow-lg border border-neutral-200">
       {/* Messages Area */}
       <div className="flex-1 overflow-y-auto p-6 space-y-6">
-        {messages.length === 0 ? (
+        {messagesLoading ? (
+          <div className="flex items-center justify-center h-full">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        ) : messages.length === 0 ? (
           <EmptyState />
         ) : (
           <AnimatePresence>

@@ -60,7 +60,8 @@
 
   .input {
     @apply w-full rounded-sm border border-neutral-300 bg-surface
-      focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary
+      focus:outline-none focus:ring-4 focus:ring-[color:var(--cs-primary)/0.1]
+      focus:border-primary
       disabled:cursor-not-allowed disabled:opacity-50;
     padding: var(--cs-input-padding);
   }
