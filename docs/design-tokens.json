@@ -1,0 +1,130 @@
+{
+  "$schema": "https://design-tokens.github.io/schema.json",
+  "metadata": {
+    "name": "CropSense Design Tokens",
+    "version": "1.0.0",
+    "description": "Design tokens for CropSense RAG Web App — Agrico-inspired greens, earthy neutrals, typographic scale, spacing, radii, shadows, motion."
+  },
+  "color": {
+    "primary-50": { "value": "#F2FBF4" },
+    "primary-100": { "value": "#DFF6E6" },
+    "primary-200": { "value": "#C6EFCF" },
+    "primary-300": { "value": "#9FE0A8" },
+    "primary-400": { "value": "#7CCD86" },
+    "primary-500": { "value": "#4CAF50", "comment": "brand green" },
+    "primary-600": { "value": "#3E9943" },
+    "primary-700": { "value": "#2F6F30" },
+    "secondary-100": { "value": "#FFF8E6" },
+    "secondary-300": { "value": "#FEE29B" },
+    "secondary-500": { "value": "#F6C84C", "comment": "accent warm yellow" },
+    "neutral-50": { "value": "#FBFCFB" },
+    "neutral-100": { "value": "#F6F7F6" },
+    "neutral-200": { "value": "#ECEEEB" },
+    "neutral-300": { "value": "#D8DCD6" },
+    "neutral-400": { "value": "#BFC6BD" },
+    "neutral-500": { "value": "#94A09A" },
+    "neutral-700": { "value": "#46554F" },
+    "text-primary": { "value": "#1F2A27" },
+    "text-secondary": { "value": "#4E5A56" },
+    "surface": { "value": "#FFFFFF" },
+    "muted": { "value": "#F0F6F2" },
+    "success": { "value": "#43A047" },
+    "warning": { "value": "#FFB300" },
+    "error": { "value": "#E53935" }
+  },
+  "typography": {
+    "font-family-base": { "value": "'Inter', 'Poppins', sans-serif" },
+    "display": {
+      "font-size": { "value": "56px" },
+      "font-weight": { "value": "700" },
+      "line-height": { "value": "1.08" }
+    },
+    "h1": { "font-size": { "value": "40px" }, "font-weight": { "value": "700" }, "line-height": { "value": "1.12" } },
+    "h2": { "font-size": { "value": "28px" }, "font-weight": { "value": "600" }, "line-height": { "value": "1.2" } },
+    "h3": { "font-size": { "value": "20px" }, "font-weight": { "value": "600" }, "line-height": { "value": "1.25" } },
+    "body": { "font-size": { "value": "16px" }, "font-weight": { "value": "400" }, "line-height": { "value": "1.6" } },
+    "small": { "font-size": { "value": "14px" }, "font-weight": { "value": "400" } },
+    "caption": { "font-size": { "value": "12px" }, "font-weight": { "value": "400" } }
+  },
+  "spacing": {
+    "xxs": { "value": "4px" },
+    "xs": { "value": "8px" },
+    "sm": { "value": "12px" },
+    "md": { "value": "16px" },
+    "lg": { "value": "24px" },
+    "xl": { "value": "32px" },
+    "2xl": { "value": "48px" },
+    "3xl": { "value": "64px" }
+  },
+  "radius": {
+    "sm": { "value": "6px" },
+    "md": { "value": "10px" },
+    "lg": { "value": "16px" },
+    "pill": { "value": "9999px" }
+  },
+  "shadow": {
+    "sm": { "value": "0 1px 2px rgba(15, 23, 20, 0.04)" },
+    "md": { "value": "0 6px 18px rgba(15, 23, 20, 0.08)" },
+    "lg": { "value": "0 12px 30px rgba(15, 23, 20, 0.12)" }
+  },
+  "motion": {
+    "duration-fast": { "value": "120ms" },
+    "duration-medium": { "value": "260ms" },
+    "duration-slow": { "value": "420ms" },
+    "easing-standard": { "value": "cubic-bezier(0.4, 0.0, 0.2, 1)" },
+    "keyframes": {
+      "fade-in": { "value": "from { opacity: 0; } to { opacity: 1; }" },
+      "slide-up": { "value": "from { transform: translateY(12px); opacity:0 } to { transform: translateY(0); opacity:1 }" }
+    }
+  },
+  "breakpoints": {
+    "mobile": { "value": "0px" },
+    "sm": { "value": "640px" },
+    "md": { "value": "768px" },
+    "lg": { "value": "1024px" },
+    "xl": { "value": "1280px" }
+  },
+  "components": {
+    "button": {
+      "font-size": { "value": "16px" },
+      "padding": { "value": "12px 20px" },
+      "radius": { "value": "{radius.md.value}" },
+      "primary-background": { "value": "{color.primary-500.value}" },
+      "primary-foreground": { "value": "{color.surface.value}" }
+    },
+    "input": {
+      "padding": { "value": "10px 12px" },
+      "radius": { "value": "{radius.sm.value}" },
+      "border": { "value": "1px solid {color.neutral-300.value}" },
+      "focus-ring": { "value": "0 0 0 4px rgba(76, 175, 80, 0.12)" }
+    },
+    "card": {
+      "padding": { "value": "{spacing.lg.value}" },
+      "radius": { "value": "{radius.lg.value}" },
+      "shadow": { "value": "{shadow.md.value}" },
+      "background": { "value": "{color.surface.value}" }
+    },
+    "hero": {
+      "padding-vertical": { "value": "{spacing.2xl.value}" },
+      "title-size": { "value": "{typography.h1.font-size.value}" },
+      "lead-size": { "value": "{typography.body.font-size.value}" }
+    },
+    "nav": {
+      "height": { "value": "64px" },
+      "background": { "value": "{color.surface.value}" },
+      "border-bottom": { "value": "1px solid {color.neutral-200.value}" }
+    }
+  },
+  "accessibility": {
+    "contrast-minimum": { "value": "4.5:1" },
+    "focus-outline": { "value": "2px solid rgba(76, 175, 80, 0.85)" },
+    "touch-target-size": { "value": "44px" }
+  },
+  "build": {
+    "css-variable-prefix": { "value": "--cs" },
+    "sample": {
+      "css": { "value": ":root { --cs-color-primary-500: #4CAF50; --cs-font-family-base: 'Inter, Poppins, sans-serif'; }" },
+      "html": { "value": "<button class='btn btn-primary'>Ask CropSense</button>" }
+    }
+  }
+}
