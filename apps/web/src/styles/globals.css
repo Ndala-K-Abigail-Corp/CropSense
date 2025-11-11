@@ -9,7 +9,9 @@
   }
 
   body {
-    @apply bg-background text-text-primary font-sans antialiased;
+    @apply font-sans antialiased;
+    background-color: var(--cs-color-background);
+    color: var(--cs-color-text-primary);
   }
 
   h1 {

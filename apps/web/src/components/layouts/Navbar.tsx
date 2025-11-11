@@ -20,36 +20,42 @@ export function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-surface border-b border-neutral-200">
+    <nav className="sticky top-0 z-50 bg-white shadow-sm border-b border-neutral-200">
       <div className="container-custom">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-16 md:h-20 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-3">
             <motion.div
               whileHover={{ rotate: 360 }}
-              transition={{ duration: 0.5 }}
-              className="flex items-center justify-center w-10 h-10 bg-primary rounded-lg"
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+              className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl"
+              style={{ backgroundColor: 'var(--cs-primary)' }}
             >
-              <Sprout className="w-6 h-6 text-white" />
+              <Sprout className="w-6 h-6 md:w-7 md:h-7 text-white" />
             </motion.div>
-            <span className="text-xl font-bold text-text-primary">CropSense</span>
+            <span className="text-xl md:text-2xl font-bold" style={{ color: 'var(--cs-text)' }}>
+              CropSense
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-text-secondary hover:text-primary transition-colors">
+            <Link 
+              to="/" 
+              className="text-sm font-medium text-neutral-700 hover:text-primary transition-colors duration-200"
+            >
               Home
             </Link>
             <Link
               to="/how-it-works"
-              className="text-text-secondary hover:text-primary transition-colors"
+              className="text-sm font-medium text-neutral-700 hover:text-primary transition-colors duration-200"
             >
               How it works
             </Link>
             {user && (
               <Link
                 to="/dashboard"
-                className="text-text-secondary hover:text-primary transition-colors"
+                className="text-sm font-medium text-neutral-700 hover:text-primary transition-colors duration-200"
               >
                 Dashboard
               </Link>
@@ -57,22 +63,36 @@ export function Navbar() {
           </div>
 
           {/* Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-3">
             {user ? (
               <>
-                <span className="text-sm text-text-secondary">{user.email}</span>
-                <Button variant="ghost" onClick={handleLogout} className="flex items-center gap-2">
+                <span className="text-sm text-neutral-600 max-w-[150px] truncate">
+                  {user.email}
+                </span>
+                <Button 
+                  variant="ghost" 
+                  onClick={handleLogout} 
+                  className="flex items-center gap-2 text-neutral-700"
+                >
                   <LogOut className="w-4 h-4" />
-                  Logout
+                  <span className="hidden lg:inline">Logout</span>
                 </Button>
               </>
             ) : (
               <>
-                <Button variant="ghost" onClick={() => navigate('/login')}>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => navigate('/login')}
+                  className="text-neutral-700"
+                >
                   Login
                 </Button>
-                <Button variant="primary" onClick={() => navigate('/signup')}>
-                  Sign Up
+                <Button 
+                  variant="primary" 
+                  onClick={() => navigate('/signup')}
+                  className="shadow-sm"
+                >
+                  Get Started
                 </Button>
               </>
             )}
