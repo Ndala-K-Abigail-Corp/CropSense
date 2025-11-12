@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, memo, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Loader2, ExternalLink, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
@@ -21,15 +21,15 @@ export function ChatInterface({ conversationId, onConversationCreated }: ChatInt
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
+  const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, scrollToBottom]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
@@ -75,7 +75,7 @@ export function ChatInterface({ conversationId, onConversationCreated }: ChatInt
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [conversationId, input, isLoading, createConversation, onConversationCreated, addMessage]);
 
   return (
     <div className="flex flex-col h-full max-h-[800px] bg-white rounded-lg shadow-lg border border-neutral-200">
@@ -121,13 +121,13 @@ export function ChatInterface({ conversationId, onConversationCreated }: ChatInt
   );
 }
 
-function EmptyState() {
-  const suggestions = [
+const EmptyState = memo(function EmptyState() {
+  const suggestions = useMemo(() => [
     'What are the best practices for tomato cultivation?',
     'How do I identify and treat common wheat diseases?',
     'What is the optimal planting time for corn in temperate climates?',
     'How can I improve soil health organically?',
-  ];
+  ], []);
 
   return (
     <div className="flex flex-col items-center justify-center h-full text-center py-12">
@@ -157,9 +157,9 @@ function EmptyState() {
       </div>
     </div>
   );
-}
+});
 
-function MessageBubble({ message }: { message: ChatMessage }) {
+const MessageBubble = memo(function MessageBubble({ message }: { message: ChatMessage }) {
   const isUser = message.role === 'user';
 
   return (
@@ -190,9 +190,9 @@ function MessageBubble({ message }: { message: ChatMessage }) {
       </div>
     </motion.div>
   );
-}
+});
 
-function SourcesList({ sources }: { sources: Source[] }) {
+const SourcesList = memo(function SourcesList({ sources }: { sources: Source[] }) {
   return (
     <Card className="mt-3 p-3 bg-surface">
       <h4 className="text-sm font-semibold text-text-primary mb-2 flex items-center gap-2">
@@ -221,9 +221,9 @@ function SourcesList({ sources }: { sources: Source[] }) {
       </ul>
     </Card>
   );
-}
+});
 
-function LoadingIndicator() {
+const LoadingIndicator = memo(function LoadingIndicator() {
   return (
     <motion.div
       initial={{ opacity: 0 }}

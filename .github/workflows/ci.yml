@@ -42,6 +42,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       
+      - name: Setup Turbo cache
+        uses: actions/cache@v3
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+      
       - name: Run linter
         run: pnpm lint
       
@@ -70,8 +78,25 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       
-      - name: Run tests
-        run: pnpm test
+      - name: Setup Turbo cache
+        uses: actions/cache@v3
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-test-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-test-
+            ${{ runner.os }}-turbo-
+      
+      - name: Run tests with coverage
+        run: pnpm test:coverage
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./apps/web/coverage/coverage-final.json
+          flags: frontend
+          name: frontend-coverage
+          fail_ci_if_error: false
   
   build:
     name: Build
@@ -94,6 +119,15 @@ jobs:
       
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      
+      - name: Setup Turbo cache
+        uses: actions/cache@v3
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-build-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-build-
+            ${{ runner.os }}-turbo-
       
       - name: Build web app
         run: pnpm build:web
@@ -132,4 +166,18 @@ jobs:
       - name: Check formatting with black
         working-directory: packages/rag
         run: black --check .
+      
+      - name: Run Python tests with coverage
+        working-directory: packages/rag
+        run: |
+          pip install pytest pytest-cov pytest-asyncio
+          pytest --cov=. --cov-report=xml --cov-report=term
+      
+      - name: Upload Python coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./packages/rag/coverage.xml
+          flags: backend
+          name: backend-coverage
+          fail_ci_if_error: false
 

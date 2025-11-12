@@ -2,12 +2,14 @@
 
 Retrieval-only RAG backend for CropSense agricultural guidance platform using Vertex AI embeddings and Firestore.
 
+> **📖 NEW:** See [SETUP_GUIDE.md](./SETUP_GUIDE.md) for comprehensive setup and validation instructions.
+
 ## Overview
 
 This package provides a complete RAG pipeline for processing agricultural documents and retrieving relevant context for user queries. It uses:
 
-- **Vertex AI text-multilingual-embedding-002**: Multi-language embedding model (768 dimensions)
-- **Firestore**: Vector storage with similarity search
+- **Vertex AI text-embedding-005**: Latest Google embedding model (768 dimensions)
+- **Firestore**: Vector storage with cosine similarity search  
 - **FastAPI**: REST API for query and document management
 
 **Note**: This is a retrieval-only implementation. Generation/synthesis is handled separately or left to the frontend.
@@ -23,9 +25,11 @@ This package provides a complete RAG pipeline for processing agricultural docume
 
 ## Quick Start
 
+> **📖 For detailed setup instructions, see [SETUP_GUIDE.md](./SETUP_GUIDE.md)**
+
 ### 1. Prerequisites
 
-- Python 3.9+
+- Python 3.8+
 - Google Cloud Project with:
   - Vertex AI API enabled
   - Firestore database created
@@ -33,66 +37,46 @@ This package provides a complete RAG pipeline for processing agricultural docume
 
 ### 2. Installation
 
-Create a virtual environment and install dependencies:
-
 ```bash
 cd packages/rag
-python -m venv .venv
-
-# Activate virtual environment
-# On Windows:
-.venv\Scripts\activate
-# On Mac/Linux:
-source .venv/bin/activate
-
-# Install dependencies
 pip install -r requirements.txt
 ```
 
 ### 3. Configuration
 
-Copy the example environment file and configure:
-
 ```bash
-cp env.example .env
-```
+# Copy environment template
+cp env.template .env
 
-Edit `.env` with your settings:
-
-```bash
-# Required
-GOOGLE_CLOUD_PROJECT=your-project-id
-GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account-key.json
-
-# Optional (defaults provided)
-VERTEX_AI_LOCATION=us-central1
-EMBEDDING_MODEL=text-multilingual-embedding-002
-EMBEDDING_DIMENSION=768
+# Edit .env with your project settings
+# Required: GOOGLE_CLOUD_PROJECT, GOOGLE_APPLICATION_CREDENTIALS
 ```
 
 ### 4. Authenticate
 
 ```bash
-# Option 1: Service account key
-export GOOGLE_APPLICATION_CREDENTIALS="/path/to/service-account-key.json"
-
-# Option 2: Application default credentials
+# Option 1: Application default credentials (recommended)
 gcloud auth application-default login
+
+# Option 2: Service account key
+export GOOGLE_APPLICATION_CREDENTIALS="/path/to/service-account-key.json"
 ```
 
-### 5. Test the Setup
+### 5. Verify Setup
 
-Run the test pipeline to verify everything works:
+Run the automated validation:
 
 ```bash
-python test_pipeline.py
+python validate_setup.py
 ```
 
-This will test:
-- ✓ Embedding generation
-- ✓ Firestore connectivity
-- ✓ Retrieval pipeline
-- ✓ Metadata filtering
+Or run individual test scripts:
+
+```bash
+python check_data.py          # Check Firestore data
+python test_embeddings.py     # Test embedding generation
+python test_retrieval.py      # Test retrieval pipeline
+```
 
 ## Usage
 
@@ -313,8 +297,9 @@ All configuration is done via environment variables (see `env.example`):
 |----------|---------|-------------|
 | `GOOGLE_CLOUD_PROJECT` | - | GCP project ID (required) |
 | `VERTEX_AI_LOCATION` | `us-central1` | Vertex AI region |
-| `EMBEDDING_MODEL` | `text-multilingual-embedding-002` | Embedding model |
+| `EMBEDDING_MODEL` | `text-embedding-005` | Embedding model (latest) |
 | `EMBEDDING_DIMENSION` | `768` | Embedding dimension |
+| `VECTOR_COLLECTION` | `vectorChunks` | Firestore collection name |
 
 ### Chunking Settings
 
@@ -323,13 +308,14 @@ All configuration is done via environment variables (see `env.example`):
 | `CHUNK_SIZE` | `512` | Characters per chunk |
 | `CHUNK_OVERLAP` | `50` | Character overlap |
 | `EMBEDDING_BATCH_SIZE` | `20` | Chunks per API call |
+| `FIRESTORE_BATCH_SIZE` | `500` | Documents per Firestore batch |
 
 ### Retrieval Settings
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `TOP_K_RESULTS` | `5` | Default results to return |
-| `SIMILARITY_THRESHOLD` | `0.5` | Minimum similarity score |
+| `SIMILARITY_THRESHOLD` | `0.6` | Minimum similarity score |
 | `MAX_CONTEXT_LENGTH` | `8000` | Max context characters |
 
 ## Firestore Schema

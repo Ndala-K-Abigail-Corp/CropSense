@@ -71,6 +71,22 @@ export const cleanupOldConversations = functions.pubsub
   });
 
 /**
+ * RAG Document Processing
+ * Auto-process PDFs uploaded to Cloud Storage
+ */
+export { processNewDocument } from './processNewDocument';
+
+/**
+ * Rate Limiting Management
+ * Track and enforce user rate limits
+ */
+export {
+  onConversationCreate,
+  onMessageCreate,
+  cleanupOldRateLimits,
+} from './rateLimiting';
+
+/**
  * TODO: Implement tRPC handlers
  * - chat.sendMessage
  * - chat.getHistory

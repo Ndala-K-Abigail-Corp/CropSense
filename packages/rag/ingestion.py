@@ -290,7 +290,7 @@ async def ingest_document(
     return stats
 
 
-async def ingest_document_sync(
+def ingest_document_sync(
     pdf_path: str,
     document_id: str,
     document_name: str,
@@ -300,7 +300,8 @@ async def ingest_document_sync(
     """
     Synchronous wrapper for ingest_document (for CLI use)
     """
-    return await ingest_document(pdf_path, document_id, document_name, document_type, metadata)
+    import asyncio
+    return asyncio.run(ingest_document(pdf_path, document_id, document_name, document_type, metadata))
 
 
 def main():

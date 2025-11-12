@@ -8,6 +8,9 @@ const envSchema = z.object({
   VITE_FIREBASE_MESSAGING_SENDER_ID: z.string().min(1, 'Firebase messaging sender ID is required'),
   VITE_FIREBASE_APP_ID: z.string().min(1, 'Firebase app ID is required'),
   VITE_API_URL: z.string().url().optional().default('http://localhost:8000'),
+  VITE_RAG_API_URL: z.string().url().optional().default('http://localhost:8000'),
+  VITE_USE_GEMINI: z.string().optional().default('true'),
+  VITE_SENTRY_DSN: z.string().url().optional(),
 });
 
 function validateEnv() {
