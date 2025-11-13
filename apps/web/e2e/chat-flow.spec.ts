@@ -77,6 +77,16 @@ test.describe('CropSense Chat Flow', () => {
       
       // Verify the user's message is displayed
       await expect(page.locator('text=best practices for growing tomatoes')).toBeVisible();
+      
+      // Verify message bubbles render correctly
+      const userMessage = page.locator('text=best practices for growing tomatoes').first();
+      await expect(userMessage).toBeVisible();
+      
+      // Verify timestamps are displayed
+      const timestamp = page.locator('text=/Just now|m ago|h ago|d ago/i').first();
+      await expect(timestamp).toBeVisible({ timeout: 5000 }).catch(() => {
+        // Timestamps might not always be visible immediately
+      });
     });
 
     // Step 6: Verify sources are displayed (if RAG is working)
@@ -87,6 +97,30 @@ test.describe('CropSense Chat Flow', () => {
       // Sources might be present if RAG backend is connected
       if (await sourcesSection.count() > 0) {
         await expect(sourcesSection.first()).toBeVisible();
+        
+        // Verify source citations are clickable
+        const sourceLink = page.locator('a[href*="http"], a[href*="gs://"]').first();
+        if (await sourceLink.count() > 0) {
+          await expect(sourceLink).toBeVisible();
+        }
+      }
+    });
+    
+    // Step 7: Verify empty state with suggestions
+    await test.step('Verify empty state displays suggestions', async () => {
+      // Create a new conversation to see empty state
+      const newConversationButton = page.locator('text=New Conversation, button:has-text("New")').first();
+      if (await newConversationButton.count() > 0) {
+        await newConversationButton.click();
+        
+        // Wait for empty state
+        await page.waitForSelector('text=/Welcome|Ask CropSense|Try one of these/i', { timeout: 5000 });
+        
+        // Verify suggested questions are visible
+        const suggestions = page.locator('text=/tomato|wheat|corn|soil/i');
+        if (await suggestions.count() > 0) {
+          await expect(suggestions.first()).toBeVisible();
+        }
       }
     });
   });

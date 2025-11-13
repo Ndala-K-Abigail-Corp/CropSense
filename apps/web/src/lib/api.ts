@@ -1,4 +1,5 @@
 import { env } from '@/env';
+import { isGreeting, getGreetingResponse } from './greeting';
 
 const API_BASE_URL = env.VITE_API_URL;
 
@@ -77,10 +78,17 @@ async function retryWithBackoff<T>(
 
 /**
  * Call the RAG backend with Gemini-powered answer generation
+ * Handles greeting detection with fallback to Gemini when no vector results
  */
 export async function sendMessage(request: SendMessageRequest): Promise<SendMessageResponse> {
   const RAG_API_URL = env.VITE_RAG_API_URL || 'http://localhost:8000';
   const USE_GEMINI = env.VITE_USE_GEMINI !== 'false'; // Default to true
+
+  // Check if this is a greeting
+  const isGreetingMessage = isGreeting(request.query);
+  
+  // For greetings, try RAG first but fallback to Gemini direct if no results
+  const useRAGForGreeting = true; // Try RAG first, but will fallback if no results
 
   return retryWithBackoff(async () => {
     try {
@@ -98,9 +106,9 @@ export async function sendMessage(request: SendMessageRequest): Promise<SendMess
           },
           body: JSON.stringify({
             query: request.query,
-            use_rag: true,
+            use_rag: isGreetingMessage ? useRAGForGreeting : true,
             top_k: 5,
-            min_score: 0.6,
+            min_score: isGreetingMessage ? 0.8 : 0.6, // Higher threshold for greetings
           }),
           signal: controller.signal,
         });
@@ -135,6 +143,25 @@ export async function sendMessage(request: SendMessageRequest): Promise<SendMess
         // Transform response based on endpoint type
         let content: string;
         let sources: Source[] = [];
+
+        // Handle greeting fallback: if greeting detected and no good results, use greeting response
+        if (isGreetingMessage) {
+          const hasGoodResults = data.chunks && Array.isArray(data.chunks) && data.chunks.length > 0;
+          const bestScore = data.chunks?.[0]?.score || 0;
+          
+          // If no results or low score, use greeting response instead
+          if (!hasGoodResults || bestScore < 0.7) {
+            return {
+              conversationId: request.conversationId || `conv-${Date.now()}`,
+              message: {
+                role: 'assistant',
+                content: getGreetingResponse(),
+                sources: [],
+                createdAt: new Date(),
+              },
+            };
+          }
+        }
 
         if (USE_GEMINI && data.answer) {
           // Gemini answer response

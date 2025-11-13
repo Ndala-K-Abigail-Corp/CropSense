@@ -104,3 +104,7 @@ export default {
   plugins: [],
 };
 
+// Note: For prose classes to work, you may need to install @tailwindcss/typography
+// Run: pnpm add -D @tailwindcss/typography
+// Then add it to plugins: [require('@tailwindcss/typography')]
+
