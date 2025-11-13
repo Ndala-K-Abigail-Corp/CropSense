@@ -238,5 +238,4 @@ const LoadingIndicator = memo(function LoadingIndicator() {
       </div>
     </motion.div>
   );
-}
-
+});

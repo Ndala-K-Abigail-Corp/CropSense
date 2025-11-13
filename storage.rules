@@ -29,6 +29,17 @@ service firebase.storage {
       allow write: if isAdmin();
     }
     
+    // Farming knowledge base documents (admin upload, public read for processing)
+    match /farming-documents/{fileName} {
+      allow read: if true; // Allow Cloud Function to read
+      allow write: if isAdmin();
+    }
+    
+    match /agricultural-docs/{fileName} {
+      allow read: if true; // Allow Cloud Function to read
+      allow write: if isAdmin();
+    }
+    
     // Default deny all
     match /{allPaths=**} {
       allow read, write: if false;

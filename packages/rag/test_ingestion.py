@@ -252,3 +252,4 @@ def test_chunk_text_intelligent_with_overlap():
         assert len(chunk["text"]) > 0
         assert chunk["char_count"] > 0
 
+

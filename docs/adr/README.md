@@ -37,3 +37,4 @@ We use a simple format for our ADRs:
 - [ADR GitHub Organization](https://adr.github.io/)
 - [Michael Nygard's ADR Template](https://github.com/joelparkerhenderson/architecture-decision-record/blob/main/templates/decision-record-template-by-michael-nygard/index.md)
 
+

@@ -135,3 +135,4 @@ class QueryCache:
 # Global cache instance
 query_cache = QueryCache(maxsize=100, ttl_seconds=3600)
 
+

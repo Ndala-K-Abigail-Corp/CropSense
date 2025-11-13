@@ -350,3 +350,4 @@ Answer:"""
 # Singleton instance
 gemini_service = GeminiService()
 
+

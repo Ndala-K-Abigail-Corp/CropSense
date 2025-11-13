@@ -40,3 +40,4 @@ def list_all_collections():
 if __name__ == "__main__":
     list_all_collections()
 
+

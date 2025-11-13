@@ -17,7 +17,7 @@ export default defineConfig({
   reporter: [
     ['html'],
     ['json', { outputFile: 'playwright-report/results.json' }],
-    ...(process.env.CI ? [['github']] : []),
+    ...(process.env.CI ? [['github', { title: 'CropSense E2E Tests' }]] : []),
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -64,4 +64,5 @@ export default defineConfig({
     timeout: 120 * 1000,
   },
 });
+
 

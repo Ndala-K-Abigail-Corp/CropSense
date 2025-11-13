@@ -446,7 +446,7 @@ async def answer_question(request: AnswerRequest, api_key: str = Security(verify
             query=request.query,
             answer=result.get("answer", ""),
             source=result.get("source", "unknown"),
-            chunks=retrieved_chunks,
+            chunks=retrieved_chunks if retrieved_chunks is not None else [],
             cached=result.get("cached", False),
             generation_time_ms=result.get("generation_time_ms")
         )

@@ -196,3 +196,4 @@ We will use **Vertex AI for embeddings and generation** with **Firestore for vec
 - [RAG Best Practices](https://www.anthropic.com/index/contextual-retrieval)
 - [Gemini Models Documentation](https://cloud.google.com/vertex-ai/docs/generative-ai/model-reference/gemini)
 
+

@@ -80,3 +80,4 @@ class StructuredLogger:
 # Global logger instance
 logger = StructuredLogger("cropsense-rag")
 
+
