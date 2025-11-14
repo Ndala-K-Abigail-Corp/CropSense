@@ -15,7 +15,7 @@ vertexai>=1.71.1
 # Document processing
 pdfplumber==0.10.3
 PyMuPDF==1.23.8
-python-docx==1.1.0
+python-docx==1.2.0
 
 # Vector operations
 numpy==1.26.3
