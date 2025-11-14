@@ -6,10 +6,10 @@ pydantic-settings==2.1.0
 python-multipart==0.0.6
 
 # Google Cloud / Vertex AI
-google-cloud-aiplatform==1.71.1
-google-cloud-firestore==2.14.0
+google-cloud-aiplatform==1.127.0
+google-cloud-firestore==2.21.0
 google-cloud-storage==2.14.0
-google-auth==2.26.2
+google-auth==2.43.0
 vertexai>=1.71.1
 
 # Document processing
