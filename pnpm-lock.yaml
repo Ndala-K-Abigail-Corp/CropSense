@@ -110,8 +110,8 @@ importers:
         specifier: ^7.6.7
         version: 7.6.20
       '@storybook/addon-links':
-        specifier: ^7.6.7
-        version: 7.6.20(react@18.3.1)
+        specifier: ^10.0.7
+        version: 10.0.7(react@18.3.1)(storybook@10.0.7)
       '@storybook/blocks':
         specifier: ^7.6.7
         version: 7.6.20(@types/react-dom@18.3.7)(@types/react@18.3.26)(react-dom@18.3.1)(react@18.3.1)
@@ -3444,18 +3444,18 @@ packages:
       ts-dedent: 2.2.0
     dev: true
 
-  /@storybook/addon-links@7.6.20(react@18.3.1):
-    resolution: {integrity: sha512-iomSnBD90CA4MinesYiJkFX2kb3P1Psd/a1Y0ghlFEsHD4uMId9iT6sx2s16DYMja0SlPkrbWYnGukqaCjZpRw==}
+  /@storybook/addon-links@10.0.7(react@18.3.1)(storybook@10.0.7):
+    resolution: {integrity: sha512-fsstlcBuvxULuExqDs7RHcuf7TXxfL1PY92uPQdB9EEdZCjbf9ZzoGD/soZK1wkBH3yPe2PMPk2aggMXvJUpsQ==}
     peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      storybook: ^10.0.7
     peerDependenciesMeta:
       react:
         optional: true
     dependencies:
-      '@storybook/csf': 0.1.13
       '@storybook/global': 5.0.0
       react: 18.3.1
-      ts-dedent: 2.2.0
+      storybook: 10.0.7(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@18.3.1)(react@18.3.1)(vite@5.4.21)
     dev: true
 
   /@storybook/addon-measure@8.6.14(storybook@10.0.7):
