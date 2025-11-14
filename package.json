@@ -34,7 +34,7 @@
   },
   "packageManager": "pnpm@8.15.0",
   "dependencies": {
-    "firebase": "^10.7.2",
+    "firebase": "^12.6.0",
     "react-markdown": "^9.1.0",
     "remark-gfm": "^4.0.1"
   }
