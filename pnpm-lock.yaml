@@ -146,8 +146,8 @@ importers:
         specifier: ^1.2.1
         version: 1.6.1(vitest@1.6.1)
       '@vitest/ui':
-        specifier: ^4.0.8
-        version: 4.0.8(vitest@1.6.1)
+        specifier: ^4.0.9
+        version: 4.0.9(vitest@1.6.1)
       autoprefixer:
         specifier: ^10.4.17
         version: 10.4.22(postcss@8.5.6)
@@ -4696,8 +4696,8 @@ packages:
       tinyrainbow: 2.0.0
     dev: true
 
-  /@vitest/pretty-format@4.0.8:
-    resolution: {integrity: sha512-qRrjdRkINi9DaZHAimV+8ia9Gq6LeGz2CgIEmMLz3sBDYV53EsnLZbJMR1q84z1HZCMsf7s0orDgZn7ScXsZKg==}
+  /@vitest/pretty-format@4.0.9:
+    resolution: {integrity: sha512-Hor0IBTwEi/uZqB7pvGepyElaM8J75pYjrrqbC8ZYMB9/4n5QA63KC15xhT+sqHpdGWfdnPo96E8lQUxs2YzSQ==}
     dependencies:
       tinyrainbow: 3.0.3
     dev: true
@@ -4730,12 +4730,12 @@ packages:
       tinyspy: 4.0.4
     dev: true
 
-  /@vitest/ui@4.0.8(vitest@1.6.1):
-    resolution: {integrity: sha512-F9jI5rSstNknPlTlPN2gcc4gpbaagowuRzw/OJzl368dvPun668Q182S8Q8P9PITgGCl5LAKXpzuue106eM4wA==}
+  /@vitest/ui@4.0.9(vitest@1.6.1):
+    resolution: {integrity: sha512-6HV2HHl9aRJ09TlYj/WAQxaa797Ezb5u0LpgabthlASAUAWKgw/W1DSPX7t848mMZmIUvzZgnUHGIylAoYHP0w==}
     peerDependencies:
-      vitest: 4.0.8
+      vitest: 4.0.9
     dependencies:
-      '@vitest/utils': 4.0.8
+      '@vitest/utils': 4.0.9
       fflate: 0.8.2
       flatted: 3.3.3
       pathe: 2.0.3
@@ -4762,10 +4762,10 @@ packages:
       tinyrainbow: 2.0.0
     dev: true
 
-  /@vitest/utils@4.0.8:
-    resolution: {integrity: sha512-pdk2phO5NDvEFfUTxcTP8RFYjVj/kfLSPIN5ebP2Mu9kcIMeAQTbknqcFEyBcC4z2pJlJI9aS5UQjcYfhmKAow==}
+  /@vitest/utils@4.0.9:
+    resolution: {integrity: sha512-cEol6ygTzY4rUPvNZM19sDf7zGa35IYTm9wfzkHoT/f5jX10IOY7QleWSOh5T0e3I3WVozwK5Asom79qW8DiuQ==}
     dependencies:
-      '@vitest/pretty-format': 4.0.8
+      '@vitest/pretty-format': 4.0.9
       tinyrainbow: 3.0.3
     dev: true
 
