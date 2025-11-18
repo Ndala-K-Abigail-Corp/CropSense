@@ -18,7 +18,7 @@ PyMuPDF==1.23.8
 python-docx==1.2.0
 
 # Vector operations
-numpy==1.26.3
+numpy==2.3.5
 
 # Utilities
 python-dotenv==1.0.0
